@@ -75,7 +75,7 @@ foliate
 
 # Add media codecs
 ffmpeg-free
-libavcodec-free.x86_64
+libavcodec-freeworld
 intel-media-driver
 %end
 
