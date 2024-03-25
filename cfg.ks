@@ -88,7 +88,6 @@ cat >> /etc/dnf/dnf.conf << EOF
 max_parallel_downloads=8
 install_weak_deps=False
 deltarpm=False
-excludepkgs=xorg-x11-*
 EOF
 %end
 
@@ -101,7 +100,6 @@ cat >> /etc/dnf/dnf.conf << EOF
 max_parallel_downloads=8
 install_weak_deps=False
 deltarpm=False
-excludepkgs=xorg-x11-*
 EOF
 
 # dns conf
