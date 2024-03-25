@@ -66,7 +66,7 @@ repo --name="RPMFusion-NonFree-Test-Updates" --metalink=https://mirrors.rpmfusio
 -kwrite
 
 # Add software
-git 
+git
 vim
 vlc
 chromium
@@ -74,8 +74,8 @@ gwenview
 foliate
 
 # Add media codecs
-ffpmeg-free
-libavcodec-freeworld
+ffmpeg-free
+libavcodec-free.x86_64
 intel-media-driver
 %end
 
@@ -88,7 +88,6 @@ cat >> /etc/dnf/dnf.conf << EOF
 max_parallel_downloads=8
 install_weak_deps=False
 deltarpm=False
-ip_resolve=4
 excludepkgs=xorg-x11-*
 EOF
 %end
