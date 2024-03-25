@@ -42,19 +42,19 @@ services --disabled="sshd" --enabled="NetworkManager,ModemManager"
 # Use network installation
 url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch"
 # Repos
-repo --name="Fedora $releasever - $basearch" --metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
-repo --name="Fedora $releasever - $basearch - Updates" --metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch
-repo --name="Fedora $releasever - $basearch - Test Updates" --metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-f$releasever&arch=$basearch
+repo --name="Fedora" --metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
+repo --name="Fedora-Updates" --metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch
+repo --name="Fedora-Test-Updates" --metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-f$releasever&arch=$basearch
 
-repo --name="Fedora $releasever openh264 (From Cisco) - $basearch" --metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-cisco-openh264-$releasever&arch=$basearch
+repo --name="Fedora-openh264-Cisco" --metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-cisco-openh264-$releasever&arch=$basearch
 
-repo --name="RPM Fusion for Fedora $releasever - Free" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-$releasever&arch=$basearch
-repo --name="RPM Fusion for Fedora $releasever - Free - Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-$releasever&arch=$basearch
-repo --name="RPM Fusion for Fedora $releasever - Free - Test Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-testing-$releasever&arch=$basearch
+repo --name="RPMFusion-Free" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-$releasever&arch=$basearch
+repo --name="RPMFusion-Free-Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-$releasever&arch=$basearch
+repo --name="RPMFusion-Free-Test-Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-testing-$releasever&arch=$basearch
 
-repo --name="RPM Fusion for Fedora $releasever - Nonfree" --metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-$releasever&arch=$basearch
-repo --name="RPM Fusion for Fedora $releasever - Nonfree - Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-released-$releasever&arch=$basearch
-repo --name="RPM Fusion for Fedora $releasever - Nonfree - Test Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-testing-$releasever&arch=$basearch
+repo --name="RPMFusion-NonFree" --metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-$releasever&arch=$basearch
+repo --name="RPMFusion-NonFree-Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-released-$releasever&arch=$basearch
+repo --name="RPMFusion-NonFree-Test-Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-testing-$releasever&arch=$basearch
 
 %packages
 @^kde-desktop-environment
