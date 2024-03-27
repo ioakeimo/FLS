@@ -22,9 +22,6 @@ shutdown
 # SELinux configuration
 selinux --enforcing
 
-# Do not configure the X Window System
-skipx
-
 # Use systemd-boot instead of GRUB
 bootloader --sdboot --timeout=0
 
