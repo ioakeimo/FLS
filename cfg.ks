@@ -34,7 +34,7 @@ clearpart --all --initlabel --disklabel=gpt
 autopart
 
 # System services
-services --disabled="sshd" --enabled="NetworkManager,ModemManager"
+services --disabled="sshd" --enabled="NetworkManager"
 
 # Fedora Mirrors
 url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-40&arch=x86_64&protocol=https&country=GR,NL,DE"
