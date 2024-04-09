@@ -36,8 +36,9 @@ autopart
 # System services
 services --disabled="sshd" --enabled="NetworkManager,ModemManager"
 
-# Use network installation
-url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-$releasever&arch=$basearch"
+# Fedora Mirrors
+url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-40&arch=x86_64&protocol=https&country=GR,NL,DE"
+
 # Repos
 repo --name="Fedora" --metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
 repo --name="Fedora-Updates" --metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch
