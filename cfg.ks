@@ -36,6 +36,9 @@ autopart
 # System services
 services --disabled="sshd" --enabled="NetworkManager"
 
+# Disable root login
+rootpw --lock
+
 # Fedora Mirrors
 url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-40&arch=x86_64&protocol=https&country=GR,NL,DE"
 
