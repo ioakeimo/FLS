@@ -43,12 +43,6 @@ rootpw --lock
 url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-40&arch=x86_64&protocol=https&country=GR,NL,DE"
 
 # Repos
-repo --name="Fedora" --metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch
-repo --name="Fedora-Updates" --metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-released-f$releasever&arch=$basearch
-repo --name="Fedora-Test-Updates" --metalink=https://mirrors.fedoraproject.org/metalink?repo=updates-testing-f$releasever&arch=$basearch
-
-repo --name="Fedora-openh264-Cisco" --metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-cisco-openh264-$releasever&arch=$basearch
-
 repo --name="RPMFusion-Free" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-$releasever&arch=$basearch
 repo --name="RPMFusion-Free-Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-$releasever&arch=$basearch
 repo --name="RPMFusion-Free-Test-Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-testing-$releasever&arch=$basearch
