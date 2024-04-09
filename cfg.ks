@@ -7,7 +7,7 @@ keyboard --vckeymap=us --xlayouts='us','gr' --switch='grp:alt_shift_toggle'
 lang en_US.UTF-8
 
 # Network information
-network --bootproto=dhcp --device=link --hostname=zenbook --activate
+network --bootproto=dhcp --device=link --hostname=fedora --activate
 
 # Firewall configuration
 firewall --enabled --service=mdns
