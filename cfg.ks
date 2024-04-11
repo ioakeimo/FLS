@@ -15,7 +15,7 @@ selinux --enforcing
 
 bootloader --sdboot --timeout=0
 
-ignoredisk --only-use=nvme0n1
+ignoredisk --only-use=nvme0n1|vd*
 zerombr
 clearpart --all --initlabel --disklabel=gpt
 autopart
