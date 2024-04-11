@@ -1,48 +1,29 @@
-# Use graphical install
 graphical
 
-# Keyboard layouts
-keyboard --vckeymap=us --xlayouts='us','gr' --switch='grp:alt_shift_toggle'
-# System language
 lang en_US.UTF-8
+keyboard --vckeymap=us --xlayouts='us','gr' --switch='grp:alt_shift_toggle'
 
-# Network information
+services --disabled="sshd" --enabled="NetworkManager"
 network --bootproto=dhcp --device=link --hostname=fedora --activate
-
-# Firewall configuration
 firewall --enabled --service=mdns
 
-# System timezone
 timesource --ntp-pool=2.fedora.pool.ntp.org
 timezone Europe/Athens --utc
 
-# Shutdown after installation
-shutdown
-
-# SELinux configuration
+rootpw --lock
 selinux --enforcing
 
-# Use systemd-boot instead of GRUB
 bootloader --sdboot --timeout=0
 
-# Disk and partitioning
 ignoredisk --only-use=nvme0n1
-# Clear the Master Boot Record
 zerombr
-# Partition clearing information
 clearpart --all --initlabel --disklabel=gpt
 autopart
 
-# System services
-services --disabled="sshd" --enabled="NetworkManager"
+reboot
 
-# Disable root login
-rootpw --lock
-
-# Fedora Mirrors
 url --mirrorlist="https://mirrors.fedoraproject.org/mirrorlist?repo=fedora-40&arch=x86_64&protocol=https&country=GR,NL,DE"
 
-# Repos
 repo --name="RPMFusion-Free" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-$releasever&arch=$basearch
 repo --name="RPMFusion-Free-Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-$releasever&arch=$basearch
 repo --name="RPMFusion-Free-Test-Updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-testing-$releasever&arch=$basearch
