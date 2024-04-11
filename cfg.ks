@@ -79,9 +79,15 @@ max_parallel_downloads=8
 install_weak_deps=False
 EOF
 
-# Mirror management
-# Explicitly limit mirrors to https and a selection of countries
+# Mirror/Repo management
+# Remove random repos that for some reason pre-exist
+for repomatch in "copr" "nvidia" "steam" "google"; do
+  rm -f /etc/yum.repos.d/*"$repomatch"*
+done
+
+# Explicitly limit mirrors to https and a selection of countries for both fedora and rpmfusion
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/fedora*
+sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/rpmfusion*
 dnf clean all
 
 # dns conf
