@@ -66,6 +66,7 @@ EOF
 # Mirror management
 # Explicitly limit mirrors to https and a selection of countries
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/anaconda.repos.d/fedora*
+dnf clean all
 %end
 
 %post --interpreter=/bin/bash
@@ -81,6 +82,7 @@ EOF
 # Mirror management
 # Explicitly limit mirrors to https and a selection of countries
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/fedora*
+dnf clean all
 
 # dns conf
 install -o root -g root -m 0755 -d /etc/systemd/resolved.conf.d
