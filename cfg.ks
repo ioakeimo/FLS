@@ -62,6 +62,10 @@ cat >> /etc/dnf/dnf.conf << EOF
 max_parallel_downloads=8
 install_weak_deps=False
 EOF
+
+# Mirror management
+# Explicitly limit mirrors to https and a selection of countries
+sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/anaconda.repos.d/fedora*
 %end
 
 %post --interpreter=/bin/bash
@@ -73,6 +77,10 @@ cat >> /etc/dnf/dnf.conf << EOF
 max_parallel_downloads=8
 install_weak_deps=False
 EOF
+
+# Mirror management
+# Explicitly limit mirrors to https and a selection of countries
+sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/fedora*
 
 # dns conf
 install -o root -g root -m 0755 -d /etc/systemd/resolved.conf.d
