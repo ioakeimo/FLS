@@ -23,6 +23,7 @@ autopart
 reboot
 
 url --metalink=https://mirrors.fedoraproject.org/metalink?repo=fedora-$releasever&arch=$basearch&protocol=https&country=GR,IE,DE,NL
+repo --name="updates"
 
 repo --name="rpmfusion-free" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-$releasever&arch=$basearch&protocol=https&country=IE,DE,NL
 repo --name="rpmfusion-free-updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-$releasever&arch=$basearch&protocol=https&country=IE,DE,NL
