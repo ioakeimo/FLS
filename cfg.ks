@@ -87,6 +87,9 @@ for repomatch in "copr" "nvidia" "steam" "google"; do
   rm -f /etc/yum.repos.d/*"$repomatch"*
 done
 
+# Remove all testing repos
+rm -f /etc/yum.repos.d/*testing*
+
 # Explicitly limit mirrors to https and a selection of countries for both fedora and rpmfusion
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/fedora*
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/rpmfusion*
