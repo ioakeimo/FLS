@@ -32,6 +32,9 @@ repo --name="rpmfusion-free-updates" --metalink=https://mirrors.rpmfusion.org/me
 repo --name="rpmfusion-nonfree" --metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-$releasever&arch=$basearch&protocol=https&country=IE,DE,NL
 repo --name="rpmfusion-nonfree-updates" --metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-released-$releasever&arch=$basearch&protocol=https&country=IE,DE,NL
 
+repo --name="vscode" --baseurl=https://packages.microsoft.com/yumrepos/vscode
+repo --name="brave-browser" --baseurl=https://brave-browser-rpm-release.s3.brave.com/$basearch
+
 %packages
 @^kde-desktop-environment
 
@@ -48,6 +51,8 @@ vlc
 chromium
 gwenview
 foliate
+code
+brave-browser
 
 # Add media codecs
 ffmpeg-free
