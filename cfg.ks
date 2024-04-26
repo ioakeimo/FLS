@@ -95,6 +95,7 @@ type=rpm-md
 gpgcheck=1
 repo_gpgcheck=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
+includepkgs=ffmpeg,ffmpeg-libs,libavdevice,x264-libs,x265-libs
 
 [rpmfusion-free-updates]
 name=RPM Fusion for Fedora \$releasever - Free - Updates
@@ -104,6 +105,7 @@ type=rpm-md
 gpgcheck=1
 repo_gpgcheck=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
+includepkgs=ffmpeg,ffmpeg-libs,libavdevice,x264-libs,x265-libs
 
 EOF
 
