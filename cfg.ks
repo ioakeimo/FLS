@@ -44,48 +44,60 @@ gwenview
 foliate
 %end
 
-%pre
-#!/bin/bash
-set -x
+%pre --interpreter=/bin/bash --log=/tmp/kickstart-preinstallation.log
+set -x 
 
-# dnf conf
+echo "=================================="
+echo "Running pre-installation scripts:"
+echo "=================================="
+
+echo "Writing dnf configuration..."
 cat >> /etc/dnf/dnf.conf << EOF
 max_parallel_downloads=8
 install_weak_deps=False
 EOF
 
 # Mirror management
-# Explicitly limit mirrors to https and a selection of countries
+echo "Explicitly limiting mirrors to https and a selection of countries..."
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/anaconda.repos.d/fedora*
+
+echo "Cleaning dnf caches..."
 dnf clean all
+
+echo "Pre-installation scripts done."
 %end
 
-%post --interpreter=/bin/bash
-#!/bin/bash
+%post --interpreter=/bin/bash --log=/root/kickstart-pre-post.log
+%include /tmp/kickstart-preinstallation.log
 set -x
 
-# dnf conf
+echo "=================================="
+echo "Running post-installation scripts:"
+echo "=================================="
+
+echo "Writing dnf configuration..."
 cat >> /etc/dnf/dnf.conf << EOF
 max_parallel_downloads=8
 install_weak_deps=False
 EOF
 
-
 # Mirror/Repo management
-# Remove random repos that for some reason pre-exist
+echo "Removing unneeded pre-existing repositories..."
 for repomatch in "copr" "nvidia" "steam" "google"; do
   rm -f /etc/yum.repos.d/*"$repomatch"*
 done
 
-# Remove any testing repos
-rm -f /etc/yum.repos.d/*testing*
+echo "Removin potentially pre-existing testing reposisitories..."
+for repomatch in /etc/yum.repos.d/*testing*; do
+  rm -f /etc/yum.repos.d/*"$repomatch"*
+done
 
-# Explicitly limit mirrors to https and a selection of countries for both fedora and rpmfusion
+echo "Explicitly limiting mirrors to https and a selection of countries in target system..."
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/fedora*
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/rpmfusion*
 
-# Setup additional repos
-# RPMFusion Free (and Updates)
+echo "Setting up additional repositories:"
+echo "Setting up RPMFusion Free (and Updates) repository..."
 cat > /etc/yum.repos.d/rpmfusion-free.repo << EOF
 [rpmfusion-free]
 name=RPM Fusion for Fedora \$releasever - Free
@@ -94,7 +106,7 @@ enabled=1
 type=rpm-md
 gpgcheck=1
 repo_gpgcheck=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
+gpgkey=file:///usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
 includepkgs=ffmpeg,ffmpeg-libs,libavdevice,x264-libs,x265-libs
 
 [rpmfusion-free-updates]
@@ -104,13 +116,15 @@ enabled=1
 type=rpm-md
 gpgcheck=1
 repo_gpgcheck=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
+gpgkey=file:///usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
 includepkgs=ffmpeg,ffmpeg-libs,libavdevice,x264-libs,x265-libs
 
 EOF
+echo "Importing rpmfusion-free gpg keys..."
+rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
 
 
-# RPMFusion NonFree (and Updates)
+echo "Setting up RPMFusion NonFree (and Updates) repository...
 cat > /etc/yum.repos.d/rpmfusion-nonfree.repo << EOF
 [rpmfusion-nonfree]
 name=RPM Fusion for Fedora \$releasever - Nonfree
@@ -120,7 +134,7 @@ enabled_metadata=1
 type=rpm-md
 gpgcheck=1
 repo_gpgcheck=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-\$releasever
+gpgkey=file:///usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-\$releasever
 includepkgs=intel-media-driver
 
 [rpmfusion-nonfree-updates]
@@ -130,42 +144,60 @@ enabled=1
 type=rpm-md
 gpgcheck=1
 repo_gpgcheck=0
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-\$releasever
+gpgkey=file:///usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-\$releasever
 includepkgs=intel-media-driver
 
 EOF
+echo "Importing rpmfusion-free gpg keys..."
+rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-\$releasever
 
 
-# VSCode
+echo "Setting up Microsoft VSCode repository..."
 cat > /etc/yum.repos.d/vscode.repo << EOF
 [vscode]
 name=Microsoft VSCode
 baseurl=https://packages.microsoft.com/yumrepos/vscode
 enabled=1
 gpgcheck=1
-gpgkey=https://packages.microsoft.com/keys/microsoft.asc
+gpgkey=file:///usr/share/distribution-gpg-keys/microsoft/microsoft.gpg
 
 EOF
+echo "Importing Microsoft gpg keys..."
+rpmkeys --import /usr/share/distribution-gpg-keys/microsoft/microsoft.gpg
 
 
-# Brave Browser
+echo "Setting up  Brave Browser repository..."
 cat > /etc/yum.repos.d/brave-browser.repo << EOF
 [brave-browser]
 name=Brave Browser
 baseurl=https://brave-browser-rpm-release.s3.brave.com/\$basearch
 enabled=1
 gpgcheck=1
-gpgkey=https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+gpgkey=file:///usr/share/distribution-gpg-keys/brave/brave-core.asc
 
 EOF
+echo "Importing Brave gpg keys..."
+rpmkeys --import /usr/share/distribution-gpg-keys/brave/brave-core.asc
 
 
+echo "Cleaning dnf caches..."
 dnf clean all
+echo "Refreshing dnf..."
 dnf -y check-update --refresh
-dnf -y swap ffmpeg-free ffmpeg --allowerasing
-dnf -y in code brave-browser intel-media-driver
 
-# dns conf
+echo "Installing ffmpeg and dependent codec libraries from RPMFusion..."
+dnf -y swap ffmpeg-free ffmpeg --allowerasing
+
+echo "Installing Intel Media Driver from RPMFusion NonFree..."
+dnf -y install intel-media-driver
+
+echo "Installing VSCode..."
+dnf -y install code 
+
+echo "Installing Brave Browser..."
+dnf -y install brave-browser
+
+echo "Writting dns configuration through systemd-resolved..."
 install -o root -g root -m 0755 -d /etc/systemd/resolved.conf.d
 cat > /etc/systemd/resolved.conf.d/privacy.conf << EOF
 # Quad9 IP Adress Configuration Used: ============================
@@ -197,4 +229,5 @@ Domains=~.
 
 EOF
 
+echo "Post-installation scripts done."
 %end
