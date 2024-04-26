@@ -67,9 +67,13 @@ dnf clean all
 echo "Pre-installation scripts done."
 %end
 
-%post --interpreter=/bin/bash --log=/root/kickstart-pre-post.log
-%include /tmp/kickstart-preinstallation.log
+%post --interpreter=/bin/bash --log=/root/kickstart-postinstallation.log
 set -x
+
+echo "Copying pre-installation script logs to target system..."
+cat > /root/kickstart-preinstallation.log << EOF
+%include /tmp/kickstart-preinstallation.log
+EOF
 
 echo "=================================="
 echo "Running post-installation scripts:"
