@@ -100,7 +100,6 @@ done
 echo "Explicitly limiting mirrors to https and a selection of countries in target system..."
 set -x
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/fedora*
-sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/rpmfusion*
 { set +x; } 2> /dev/null
 
 echo "Setting up additional repositories:"
