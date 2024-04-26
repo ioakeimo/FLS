@@ -92,8 +92,8 @@ for repomatch in "copr" "nvidia" "steam" "google"; do
   rm -f /etc/yum.repos.d/*"$repomatch"*
 done
 
-for repomatch in /etc/yum.repos.d/*testing*; do
-  rm -f /etc/yum.repos.d/*"$repomatch"*
+for testrepo in /etc/yum.repos.d/*testing*; do
+  rm -f "$testrepo"
 done
 { set +x; } 2> /dev/null
 
