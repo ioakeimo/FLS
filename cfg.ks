@@ -45,8 +45,6 @@ foliate
 %end
 
 %pre --interpreter=/bin/bash --log=/tmp/kickstart-preinstallation.log
-set -x 
-
 echo "=================================="
 echo "Running pre-installation scripts:"
 echo "=================================="
@@ -59,17 +57,23 @@ EOF
 
 # Mirror management
 echo "Explicitly limiting mirrors to https and a selection of countries..."
+set -x
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/anaconda.repos.d/fedora*
+{ set +x; } 2> /dev/null
 
 echo "Cleaning dnf caches..."
+set -x
 dnf clean all
+{ set +x; } 2> /dev/null
 
 echo "Pre-installation scripts done."
 %end
 
-%post --interpreter=/bin/bash --log=/root/kickstart-pre-post.log
+%post --interpreter=/bin/bash --log=/root/kickstart-postinstallation.log
+echo "Copying pre-installation script logs to target system..."
+cat > /root/kickstart-preinstallation.log << EOF
 %include /tmp/kickstart-preinstallation.log
-set -x
+EOF
 
 echo "=================================="
 echo "Running post-installation scripts:"
@@ -83,18 +87,21 @@ EOF
 
 # Mirror/Repo management
 echo "Removing unneeded pre-existing repositories..."
+set -x
 for repomatch in "copr" "nvidia" "steam" "google"; do
   rm -f /etc/yum.repos.d/*"$repomatch"*
 done
 
-echo "Removin potentially pre-existing testing reposisitories..."
 for repomatch in /etc/yum.repos.d/*testing*; do
   rm -f /etc/yum.repos.d/*"$repomatch"*
 done
+{ set +x; } 2> /dev/null
 
 echo "Explicitly limiting mirrors to https and a selection of countries in target system..."
+set -x
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/fedora*
 sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.repos.d/rpmfusion*
+{ set +x; } 2> /dev/null
 
 echo "Setting up additional repositories:"
 echo "Setting up RPMFusion Free (and Updates) repository..."
@@ -120,8 +127,6 @@ gpgkey=file:///usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-f
 includepkgs=ffmpeg,ffmpeg-libs,libavdevice,x264-libs,x265-libs
 
 EOF
-echo "Importing rpmfusion-free gpg keys..."
-rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
 
 
 echo "Setting up RPMFusion NonFree (and Updates) repository..."
@@ -148,8 +153,6 @@ gpgkey=file:///usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-n
 includepkgs=intel-media-driver
 
 EOF
-echo "Importing rpmfusion-free gpg keys..."
-rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-\$releasever
 
 
 echo "Setting up Microsoft VSCode repository..."
@@ -162,8 +165,6 @@ gpgcheck=1
 gpgkey=file:///usr/share/distribution-gpg-keys/microsoft/microsoft.gpg
 
 EOF
-echo "Importing Microsoft gpg keys..."
-rpmkeys --import /usr/share/distribution-gpg-keys/microsoft/microsoft.gpg
 
 
 echo "Setting up  Brave Browser repository..."
@@ -176,28 +177,31 @@ gpgcheck=1
 gpgkey=file:///usr/share/distribution-gpg-keys/brave/brave-core.asc
 
 EOF
-echo "Importing Brave gpg keys..."
+
+
+echo "Importing GPG keys for installed repositories..."
+set -x
+rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
+rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-\$releasever
+rpmkeys --import /usr/share/distribution-gpg-keys/microsoft/microsoft.gpg
 rpmkeys --import /usr/share/distribution-gpg-keys/brave/brave-core.asc
+{ set +x; } 2> /dev/null
 
 
-echo "Cleaning dnf caches..."
+echo "Cleaning and refreshing dnf caches..."
+set -x
 dnf clean all
-echo "Refreshing dnf..."
 dnf -y check-update --refresh
+{ set +x; } 2> /dev/null
 
-echo "Installing ffmpeg and dependent codec libraries from RPMFusion..."
+echo "Installing packages..."
+set -x
 dnf -y swap ffmpeg-free ffmpeg --allowerasing
-
-echo "Installing Intel Media Driver from RPMFusion NonFree..."
-dnf -y install intel-media-driver
-
-echo "Installing VSCode..."
-dnf -y install code 
-
-echo "Installing Brave Browser..."
-dnf -y install brave-browser
+dnf -y install intel-media-driver code brave-browser
+{ set +x; } 2> /dev/null
 
 echo "Writting dns configuration through systemd-resolved..."
+set -x
 install -o root -g root -m 0755 -d /etc/systemd/resolved.conf.d
 cat > /etc/systemd/resolved.conf.d/privacy.conf << EOF
 # Quad9 IP Adress Configuration Used: ============================
@@ -228,6 +232,7 @@ DNSOverTLS=opportunistic
 Domains=~.
 
 EOF
+{ set +x; } 2> /dev/null
 
 echo "Post-installation scripts done."
 %end
