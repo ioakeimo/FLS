@@ -124,7 +124,7 @@ echo "Importing rpmfusion-free gpg keys..."
 rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
 
 
-echo "Setting up RPMFusion NonFree (and Updates) repository...
+echo "Setting up RPMFusion NonFree (and Updates) repository..."
 cat > /etc/yum.repos.d/rpmfusion-nonfree.repo << EOF
 [rpmfusion-nonfree]
 name=RPM Fusion for Fedora \$releasever - Nonfree
