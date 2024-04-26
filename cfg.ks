@@ -89,7 +89,7 @@ sed -ri 's/(^metalink=.*)/\1\&protocol=https\&country=GR,IE,DE,NL/g' /etc/yum.re
 cat > /etc/yum.repos.d/rpmfusion-free.repo << EOF
 [rpmfusion-free]
 name=RPM Fusion for Fedora $releasever - Free
-metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-$releasever&arch=$basearch&protocol=https&country=GR,IE,DE,NL
+metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-\$releasever&arch=\$basearch&protocol=https&country=GR,IE,DE,NL
 enabled=1
 type=rpm-md
 gpgcheck=1
@@ -98,7 +98,7 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
 
 [rpmfusion-free-updates]
 name=RPM Fusion for Fedora $releasever - Free - Updates
-metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-$releasever&arch=$basearch&protocol=https&country=GR,IE,DE,NL
+metalink=https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-\$releasever&arch=\$basearch&protocol=https&country=GR,IE,DE,NL
 enabled=1
 type=rpm-md
 gpgcheck=1
@@ -112,7 +112,7 @@ EOF
 cat > /etc/yum.repos.d/rpmfusion-nonfree.repo << EOF
 [rpmfusion-nonfree]
 name=RPM Fusion for Fedora $releasever - Nonfree
-metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-$releasever&arch=$basearch$basearch&protocol=https&country=GR,IE,DE,NL
+metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-\$releasever&arch=\$basearch&protocol=https&country=GR,IE,DE,NL
 enabled=1
 enabled_metadata=1
 type=rpm-md
@@ -123,7 +123,7 @@ includepkgs=intel-media-driver
 
 [rpmfusion-nonfree-updates]
 name=RPM Fusion for Fedora $releasever - Nonfree - Updates
-metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-released-$releasever&arch=$basearch&protocol=https&country=GR,IE,DE,NL
+metalink=https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-released-\$releasever&arch=\$basearch&protocol=https&country=GR,IE,DE,NL
 enabled=1
 type=rpm-md
 gpgcheck=1
@@ -150,7 +150,7 @@ EOF
 cat > /etc/yum.repos.d/brave-browser.repo << EOF
 [brave-browser]
 name=Brave Browser
-baseurl=https://brave-browser-rpm-release.s3.brave.com/$basearch
+baseurl=https://brave-browser-rpm-release.s3.brave.com/\$basearch
 enabled=1
 gpgcheck=1
 gpgkey=https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
