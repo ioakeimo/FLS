@@ -180,8 +180,8 @@ EOF
 
 echo "Importing GPG keys for installed repositories..."
 set -x
-rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-\$releasever
-rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-\$releasever
+rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-$(rpm -E %fedora)
+rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$(rpm -E %fedora)
 rpmkeys --import /usr/share/distribution-gpg-keys/microsoft/microsoft.gpg
 rpmkeys --import /usr/share/distribution-gpg-keys/brave/brave-core.asc
 { set +x; } 2> /dev/null
