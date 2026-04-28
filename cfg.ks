@@ -5,7 +5,6 @@ keyboard --vckeymap=us --xlayouts='us','gr' --switch='grp:alt_shift_toggle'
 
 services --disabled="sshd" --enabled="NetworkManager"
 network --bootproto=dhcp --device=link --hostname=fedora --activate
-firewall --enabled --service=mdns
 
 timesource --ntp-pool=2.fedora.pool.ntp.org
 timezone Europe/Athens --utc
