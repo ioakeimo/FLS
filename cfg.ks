@@ -37,10 +37,11 @@ repo --name="fedora-cisco-openh264"
 # Add software
 git
 vim
-vlc
+mpv
 chromium
 gwenview
-foliate
+okular
+kate
 %end
 
 %pre --interpreter=/bin/bash --log=/tmp/kickstart-preinstallation.log
