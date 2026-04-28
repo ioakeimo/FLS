@@ -29,10 +29,10 @@ repo --name="fedora-cisco-openh264"
 @^kde-desktop-environment
 
 # Remove unneeded packages
--akonadi*
--krfb
--mariadb*
--kwrite
+#-akonadi*
+#-krfb
+#-mariadb*
+#-kwrite
 
 # Add software
 git
