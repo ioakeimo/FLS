@@ -28,11 +28,17 @@ repo --name="fedora-cisco-openh264"
 %packages
 @^kde-desktop-environment
 
-# Remove unneeded packages
-#-akonadi*
-#-krfb
-#-mariadb*
-#-kwrite
+# Explicitly exclude KDE sub-groups
+-@kde-apps
+-@kde-education
+-@kde-media
+-@kde-pim
+
+# Exlclude Packages
+-plasma-welcome
+-krfb
+-kde-connect
+-kwrite
 
 # Add software
 git
