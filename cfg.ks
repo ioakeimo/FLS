@@ -58,7 +58,10 @@ echo "=================================="
 echo "Writing dnf configuration..."
 cat >> /etc/dnf/dnf.conf << EOF
 max_parallel_downloads=8
+max_downloads_per_mirror=8
 install_weak_deps=False
+minrate=50000
+timeout=3
 EOF
 
 # Mirror management
@@ -88,7 +91,10 @@ echo "=================================="
 echo "Writing dnf configuration..."
 cat >> /etc/dnf/dnf.conf << EOF
 max_parallel_downloads=8
+max_downloads_per_mirror=8
 install_weak_deps=False
+minrate=50000
+timeout=3
 EOF
 
 # Mirror/Repo management
