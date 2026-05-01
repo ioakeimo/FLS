@@ -216,6 +216,17 @@ set -x
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 { set +x; } 2> /dev/null
 
+echo "Installing Signal Flatpak..."
+set -x
+flatpak install flathub org.signal.Signal
+{ set +x; } 2> /dev/null
+
+echo "Configuring Signal Flatpak..."
+set -x
+cp /var/lib/flatpak/exports/share/applications/org.signal.Signal.desktop  ~/.local/share/applications/
+sed -i 's/^Exec=.*/& --start-in-tray --use-tray-icon --password-store=kwallet --ozone-platform=wayland/'  ~/.local/share/applications/org.signal.Signal.desktop
+{ set +x; } 2> /dev/null
+
 echo "Writting dns configuration through systemd-resolved..."
 set -x
 install -o root -g root -m 0755 -d /etc/systemd/resolved.conf.d
