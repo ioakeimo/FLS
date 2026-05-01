@@ -50,7 +50,7 @@ okular
 kate
 %end
 
-%pre --interpreter=/bin/bash --log=/tmp/kickstart-preinstallation.log
+%pre-install --interpreter=/bin/bash --log=/tmp/kickstart-preinstallation.log
 echo "=================================="
 echo "Running pre-installation scripts:"
 echo "=================================="
