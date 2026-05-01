@@ -211,6 +211,11 @@ dnf -y swap ffmpeg-free ffmpeg --allowerasing
 dnf -y install intel-media-driver code brave-browser
 { set +x; } 2> /dev/null
 
+echo "Enabling Flathub..."
+set -x
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+{ set +x; } 2> /dev/null
+
 echo "Writting dns configuration through systemd-resolved..."
 set -x
 install -o root -g root -m 0755 -d /etc/systemd/resolved.conf.d
