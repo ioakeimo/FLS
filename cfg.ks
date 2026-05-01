@@ -173,7 +173,7 @@ name=Microsoft VSCode
 baseurl=https://packages.microsoft.com/yumrepos/vscode
 enabled=1
 gpgcheck=1
-gpgkey=file:///usr/share/distribution-gpg-keys/microsoft/microsoft.gpg
+gpgkey=file:///usr/share/distribution-gpg-keys/microsoft/microsoft.asc
 
 EOF
 
@@ -185,7 +185,7 @@ name=Brave Browser
 baseurl=https://brave-browser-rpm-release.s3.brave.com/\$basearch
 enabled=1
 gpgcheck=1
-gpgkey=file:///usr/share/distribution-gpg-keys/brave/brave-core.asc
+gpgkey=file:///usr/share/distribution-gpg-keys/brave/brave-browser-archive-keyring.asc
 
 EOF
 
@@ -194,8 +194,8 @@ echo "Importing GPG keys for installed repositories..."
 set -x
 rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-free-fedora-$(rpm -E %fedora)
 rpmkeys --import /usr/share/distribution-gpg-keys/rpmfusion/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$(rpm -E %fedora)
-rpmkeys --import /usr/share/distribution-gpg-keys/microsoft/microsoft.gpg
-rpmkeys --import /usr/share/distribution-gpg-keys/brave/brave-core.asc
+rpmkeys --import /usr/share/distribution-gpg-keys/microsoft/microsoft.asc
+rpmkeys --import /usr/share/distribution-gpg-keys/brave/brave-browser-archive-keyring.asc
 { set +x; } 2> /dev/null
 
 
